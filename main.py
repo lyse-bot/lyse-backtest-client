@@ -5,7 +5,7 @@ from getpass import getpass
 
 import requests
 
-HOST = "http://127.0.0.1:8000"
+HOST = "https://api.lyse-bot.com"
 STRATEGY_NAME = "StevenCohen"
 STRATEGY_FILE = "strategy.py"
 START_TIME = datetime.date(2023, 1, 28)
