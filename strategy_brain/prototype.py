@@ -1,7 +1,10 @@
 from typing import Union
-from pydantic import BaseModel as PydanticBaseModel
+
+from pydantic import BaseModel
+
 from strategy_brain.klines import Indicator
 from strategy_brain.order import Position
+
 
 class Strategy:
     def __init__(self):

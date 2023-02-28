@@ -1,5 +1,6 @@
-from pydantic import BaseModel
 from typing import Union
+
+from pydantic import BaseModel
 
 
 class StopLoss(BaseModel):
@@ -26,7 +27,7 @@ class Position(BaseModel):
 
     @classmethod
     def long(cls, take_profit: Union[TakeProfit, list[TakeProfit]], stop_loss: StopLoss):
-       pass
+        pass
 
     @classmethod
     def short(cls, take_profit: Union[TakeProfit, list[TakeProfit]], stop_loss: StopLoss):

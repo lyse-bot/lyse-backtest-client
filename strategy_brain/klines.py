@@ -1,9 +1,10 @@
-from pydantic import BaseModel
+from typing import List
 
-from retrieve_data.call_klines import call_klines
-from binance import Client
-import talib as ta
 import pandas as pd
+import talib as ta
+from binance import Client
+from pydantic import BaseModel
+from retrieve_data.call_klines import call_klines
 
 
 def get_klines(pair, start, end, timeline):
@@ -28,10 +29,24 @@ class Timeline:
 
 
 class Indicator:
-    def __init__(self, name: str, function: str, **kwargs):
+    def __init__(self, name: str, function: str, data: List = ["open"], **kwargs):
         self.function = getattr(ta, function)
         self.name = name
+        self.data = data
         self.options = kwargs
 
-    def get_values(self, chart: pd.DataFrame):
-        return self.function(chart["close"], **self.options)
+
+class Klines(BaseModel):
+    Start: pd.Series
+    Open: pd.Series
+    High: pd.Series
+    Low: pd.Series
+    Close: pd.Series
+    Volume: pd.Series
+    End: pd.Series
+    All: pd.DataFrame
+
+    def indicator(self, indicator: str) -> pd.Series:
+        if indicator not in self.All.columns:
+            raise NameError("Given indicator name seems to not exist in klines.")
+        return self.All.loc[:, indicator]
